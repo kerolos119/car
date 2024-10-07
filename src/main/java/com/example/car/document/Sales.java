@@ -1,5 +1,8 @@
 package com.example.car.document;
 
+import com.example.car.dto.SalesDto;
+import com.example.car.model.Transition;
+import com.example.car.model.Type;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,5 +20,9 @@ import java.util.Date;
 public class Sales {
     @Id
     private String id;
+    private Date date;
+    private Transition transition;
+    private Type type;
+
 
 }

@@ -1,5 +1,7 @@
 package com.example.car.document;
 
+import com.example.car.model.Energy;
+import com.example.car.model.Transition;
 import com.example.car.model.Type;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,4 +20,6 @@ public class Model {
     private String id;
     private String name;
     private Type type;
+    private Energy energy;
+    private Transition transition;
 }
