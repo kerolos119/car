@@ -17,22 +17,23 @@ public class CarController {
     @Autowired
      private CarService service;
     @PostMapping
-    public Car create(@RequestBody CarDto dto)
+    public String create(@RequestBody Car car)
     {
-        return service.create(dto);
+        return service.create(car);
     }
     @PutMapping("{/id}")
-    public void update(@PathVariable String id, @RequestBody CarDto dto)
+    public void update(@PathVariable String id, @RequestBody Car car)
     {
-        service.update(id, dto);
+        service.update(id, car);
     }
     @GetMapping("{/id}")
-    public CarDto getById(@PathVariable String id)
+    public Car getById(@PathVariable String id)
     {
-        return  service.getById(id);
+       return service.getById(id);
     }
-    @GetMapping("{/id}")
-    public List<CarDto> search(@RequestParam(required = false) String name,
+    @GetMapping
+    public List<Car> search(
+                               @RequestParam(required = false) String name,
                                @RequestParam(required = false) String model,
                                @RequestParam(required = false) Transition transition,
                                @RequestParam(required = false) Type type,

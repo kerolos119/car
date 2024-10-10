@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -20,9 +22,9 @@ import java.util.Date;
 public class Sales {
     @Id
     private String id;
-    private Date date;
-    private Transition transition;
-    private Type type;
+    private LocalDateTime date;
+    private String carId;
+
 
 
 }

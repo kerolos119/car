@@ -28,7 +28,4 @@ public class Car {
     private Float price;
     private Energy energy;
     private Type type;
-
-
-
 }

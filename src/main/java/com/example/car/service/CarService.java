@@ -7,35 +7,49 @@ import com.example.car.model.Type;
 import com.example.car.repository.CarRepository;
 import lombok.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Builder
 public class CarService {
     @Autowired
     private CarRepository repository;
-    public Car create(CarDto dto) {
-        return repository.save(new Car());
+    @Autowired
+    MongoTemplate template;
+
+    public String create(Car car) {
+       return template.save(car).getId();
     }
 
-    public void update(String id, CarDto dto) {
-        Car oldcar= new Car(getById(id));
-        oldcar.setName(dto.getName());
-        oldcar.setColor(dto.getColor());
-        oldcar.setPrice(dto.getPrice());
-        oldcar.setModel(dto.getModel());
-        oldcar.setQuantity(dto.getQuantity());
-
-    }
-    public CarDto getById(String id) {
-        Optional<Car> entity= repository.findById(id);
-        return CarDto.builder().build();
+    public void update(String id, Car car) {
+        Query query =new Query();
+        query.addCriteria(Criteria.where("_id").is(id));
+        template.save(car);
     }
 
-    public List<CarDto> search(String name, String model, Transition transition, Type type, Float price) {
-        return List<CarDto> repository.findBy(name,model,transition,price);
+    public Car getById(String id) {
+        Query query =new Query();
+        query.addCriteria(Criteria.where("_id").is(id));
+        return template.findOne(query,Car.class);
+    }
+
+    public List<Car> search(String name, String model, Transition transition, Type type, Float price) {
+        Query query = new Query();
+        if (name != null)
+            query.addCriteria(Criteria.where("name").regex("1"));
+        if (model != null)
+            query.addCriteria(Criteria.where("model").regex("1"));
+        if (transition != null)
+            query.addCriteria(Criteria.where("transition").is("1"));
+       if (type != null)
+           query.addCriteria(Criteria.where("type").is("1"));
+        if (price != null)
+            query.addCriteria(Criteria.where("price").in("1"));
+       return template.find(query,Car.class);
     }
 }
