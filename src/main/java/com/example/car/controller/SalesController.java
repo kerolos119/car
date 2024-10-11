@@ -18,15 +18,15 @@ public class SalesController {
     @Autowired
     private SalesServices services;
     @PostMapping
-    public String create(@RequestBody Sales sales){
-        return services.create(sales);
+    public Sales create(@RequestBody SalesDto dto){
+        return services.create(dto);
     }
     @DeleteMapping("/{id}")
     public void delete(@PathVariable String id){
         services.delete(id);
     }
     @GetMapping
-    public List<Sales> search(
+    public List<SalesDto> search(
             @RequestParam(required = false) LocalTime date,
             @RequestParam(required = false) String carId)
     {

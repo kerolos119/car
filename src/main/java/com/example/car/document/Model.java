@@ -3,6 +3,7 @@ package com.example.car.document;
 import com.example.car.model.Energy;
 import com.example.car.model.Transition;
 import com.example.car.model.Type;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,9 +18,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 public class Model {
     @Id
+    @NotEmpty
     private String id;
+    @NotEmpty
     private String name;
+    @NotEmpty
     private Type type;
+    @NotEmpty
     private Energy energy;
+    @NotEmpty
     private Transition transition;
 }

@@ -3,6 +3,7 @@ package com.example.car.document;
 import com.example.car.dto.SalesDto;
 import com.example.car.model.Transition;
 import com.example.car.model.Type;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,8 +22,11 @@ import java.util.Date;
 @Builder
 public class Sales {
     @Id
+    @NotEmpty
     private String id;
+    @NotEmpty
     private LocalDateTime date;
+    @NotEmpty
     private String carId;
 
 

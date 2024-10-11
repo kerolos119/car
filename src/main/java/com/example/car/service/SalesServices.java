@@ -3,6 +3,7 @@ package com.example.car.service;
 import com.example.car.document.Car;
 import com.example.car.document.Sales;
 import com.example.car.dto.SalesDto;
+import com.example.car.mapper.SalesMapper;
 import com.example.car.repository.SalesReposatory;
 import lombok.Builder;
 import org.apache.catalina.mapper.Mapper;
@@ -11,7 +12,6 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -30,9 +30,14 @@ public class SalesServices {
     @Autowired
     MongoTemplate template;
     @Autowired
-    Mapper mapper;
-    public String create(Sales sales) {
-       return template.save(sales).getId();
+    SalesMapper mapper;
+
+    public String create(SalesDto dto) {
+        Query query =new Query();
+        query.addCriteria(Criteria.where("_id").is(dto.getId()));
+        if (template.exists(query,Sales.class))
+            throw new RuntimeException("car is order exist");
+       return template.save(mapper.toEntity(dto)).getId();
     }
     public void delete(String id) {
         Query query =new Query();
@@ -52,6 +57,8 @@ public class SalesServices {
             query.addCriteria(Criteria.where("date").is("1"));
         if (carId != null)
             query.addCriteria(Criteria.where("carId").is("1"));
-        return template.find(query,Sales.class);
+        return template.find(query,Sales.class).stream().map(sales -> {
+            return mapper.toDto(sales);
+        }).collect(Collectors.toList());
     }
 }
