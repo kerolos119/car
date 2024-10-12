@@ -6,9 +6,9 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
 @Component
-public abstract class CarMapper extends AbstractMapper<CarDto, Car> {
-    public CarMapper(Class<CarDto> carDtoClass, Class<Car> carClass) {
-        super(carDtoClass, carClass);
+public  class CarMapper extends AbstractMapper<CarDto, Car> {
+    public CarMapper() {
+        super(CarDto.class, Car.class);
     }
 
 

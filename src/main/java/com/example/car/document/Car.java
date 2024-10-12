@@ -20,7 +20,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 public class Car {
     @Id
-    @NotEmpty
     private String id;
     @NotEmpty
     private String name;
@@ -32,7 +31,7 @@ public class Car {
     private Transition transition;
     @NotEmpty
     private String color;
-    @NotEmpty
+
     private Float price;
     @NotEmpty
     private Energy energy;

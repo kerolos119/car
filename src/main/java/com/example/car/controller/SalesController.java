@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class SalesController {
     @Autowired
     private SalesServices services;
     @PostMapping
-    public Sales create(@RequestBody SalesDto dto){
+    public String create(@RequestBody SalesDto dto){
         return services.create(dto);
     }
     @DeleteMapping("/{id}")
@@ -27,7 +28,7 @@ public class SalesController {
     }
     @GetMapping
     public List<SalesDto> search(
-            @RequestParam(required = false) LocalTime date,
+            @RequestParam(required = false) LocalDate date,
             @RequestParam(required = false) String carId)
     {
         return services.search(date,carId);

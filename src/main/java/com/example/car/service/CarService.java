@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Builder
+
 public class CarService {
     @Autowired
     private CarRepository repository;
@@ -27,7 +27,7 @@ public class CarService {
     @Autowired
     CarMapper mapper;
 
-    public @NotEmpty String create(CarDto dto) {
+    public  String create(CarDto dto) {
         Query query =new Query();
         query.addCriteria(Criteria.where("name").is(dto.getName()));
         if (template.exists(query,Car.class))

@@ -28,7 +28,4 @@ public class Sales {
     private LocalDateTime date;
     @NotEmpty
     private String carId;
-
-
-
 }

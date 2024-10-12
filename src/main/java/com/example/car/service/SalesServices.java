@@ -25,10 +25,13 @@ import static java.time.LocalDateTime.*;
 public class SalesServices {
     @Autowired
     private SalesReposatory reposatory;
+
     @Autowired
     CarService service;
+
     @Autowired
     MongoTemplate template;
+
     @Autowired
     SalesMapper mapper;
 
@@ -39,22 +42,25 @@ public class SalesServices {
             throw new RuntimeException("car is order exist");
        return template.save(mapper.toEntity(dto)).getId();
     }
+
     public void delete(String id) {
         Query query =new Query();
         query.addCriteria(Criteria.where("_id").is(id));
         template.remove(query,Sales.class);
     }
+
 //    public List<SalesDto> getBySearch(LocalDate date) {
 //        LocalDateTime from = LocalDateTime.of(date, LocalTime.MIN);
 //        LocalDateTime to = LocalDateTime.of(date, LocalTime.MAX);
 //    }
 
-    public List<Sales> search(LocalTime date,String carId) {
+    public List<SalesDto> search(LocalDate date,String carId) {
         Query query= new Query();
-        if (date != null)
-            LocalDateTime from = of(date, LocalTime.MIN);
-            LocalDateTime to = of(date, LocalTime.MAX);
-            query.addCriteria(Criteria.where("date").is("1"));
+
+        if (date != null){
+            LocalDateTime from = LocalDateTime.of(date, LocalTime.MIN);
+            LocalDateTime to = LocalDateTime.of(date, LocalTime.MAX);
+            query.addCriteria(Criteria.where("date").is("1"));}
         if (carId != null)
             query.addCriteria(Criteria.where("carId").is("1"));
         return template.find(query,Sales.class).stream().map(sales -> {
