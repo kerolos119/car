@@ -1,5 +1,6 @@
 package com.example.car.dto;
 
+import com.example.car.model.Auitable;
 import com.example.car.model.Transition;
 import com.example.car.model.Type;
 import lombok.AllArgsConstructor;
@@ -11,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CarDto {
+public class CarDto extends Auitable {
     private String id;
     private String Name;
     private String quantity;

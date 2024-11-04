@@ -13,9 +13,10 @@ public  class CarMapper extends AbstractMapper<CarDto, Car> {
 
 
     @Override
-    public Car updaToEntity(@NotNull CarDto dto, Car entity) {
-        if (dto.getColor() !=null && dto.getColor().isEmpty())
+    public Car updaToEntity( CarDto dto, Car entity) {
+        if (dto.getColor() !=null && dto.getColor().isEmpty()) {
             entity.setColor(dto.getColor());
+        }
         if (dto.getModel() != null && dto.getModel().isEmpty())
             entity.setModel(dto.getModel());
         if (dto.getPrice() != null && dto.getPrice().equals(dto))

@@ -1,5 +1,6 @@
 package com.example.car.dto;
 
+import com.example.car.model.Auitable;
 import com.example.car.model.Transition;
 import com.example.car.model.Type;
 import lombok.AllArgsConstructor;
@@ -11,7 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SalesDto {
+public class SalesDto  extends Auitable {
     private String id;
     private LocalDate date;
     private String carId;

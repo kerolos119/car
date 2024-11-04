@@ -1,30 +1,27 @@
 package com.example.car.service;
 
-import com.example.car.document.Car;
 import com.example.car.document.Sales;
+import com.example.car.dto.PageResult;
 import com.example.car.dto.SalesDto;
 import com.example.car.mapper.SalesMapper;
-import com.example.car.repository.SalesReposatory;
 import lombok.Builder;
-import org.apache.catalina.mapper.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
+
+import java.awt.print.Pageable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.time.LocalDateTime.*;
-
 @Service
 @Builder
 public class SalesServices {
-    @Autowired
-    private SalesReposatory reposatory;
+
 
     @Autowired
     CarService service;
@@ -40,6 +37,8 @@ public class SalesServices {
         query.addCriteria(Criteria.where("_id").is(dto.getId()));
         if (template.exists(query,Sales.class))
             throw new RuntimeException("car is order exist");
+        dto.setCreatedAt(String.valueOf(LocalDateTime.now()));
+//        dto.setCreatedAt();
        return template.save(mapper.toEntity(dto)).getId();
     }
 
@@ -54,7 +53,7 @@ public class SalesServices {
 //        LocalDateTime to = LocalDateTime.of(date, LocalTime.MAX);
 //    }
 
-    public List<SalesDto> search(LocalDate date,String carId) {
+    public PageResult search(LocalDate date, String carId, Pageable pageable) {
         Query query= new Query();
 
         if (date != null){
@@ -63,8 +62,13 @@ public class SalesServices {
             query.addCriteria(Criteria.where("date").is("1"));}
         if (carId != null)
             query.addCriteria(Criteria.where("carId").is("1"));
-        return template.find(query,Sales.class).stream().map(sales -> {
+//        return template.find(query,Sales.class).stream().map(sales -> {
+//            return mapper.toDto(sales);
+//        }).collect(Collectors.toList());
+        List<SalesDto> salesDtos = template.find(query.with(pageable),Sales.class).stream().map(sales -> {
             return mapper.toDto(sales);
         }).collect(Collectors.toList());
+        Long count= template.count(query,Sales.class);
+        return PageResult.builder().item(salesDt).count(count).build();
     }
 }

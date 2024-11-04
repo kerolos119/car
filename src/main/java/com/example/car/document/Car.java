@@ -1,6 +1,7 @@
 package com.example.car.document;
 
 import com.example.car.dto.CarDto;
+import com.example.car.model.Auitable;
 import com.example.car.model.Energy;
 import com.example.car.model.Transition;
 import com.example.car.model.Type;
@@ -18,7 +19,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Car {
+public class Car extends Auitable {
     @Id
     private String id;
     @NotEmpty

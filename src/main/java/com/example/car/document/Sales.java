@@ -1,6 +1,7 @@
 package com.example.car.document;
 
 import com.example.car.dto.SalesDto;
+import com.example.car.model.Auitable;
 import com.example.car.model.Transition;
 import com.example.car.model.Type;
 import jakarta.validation.constraints.NotEmpty;
@@ -20,7 +21,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Sales {
+public class Sales extends Auitable {
     @Id
     @NotEmpty
     private String id;
